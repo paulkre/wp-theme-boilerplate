@@ -1,0 +1,27 @@
+{
+  "name": "wp-theme-boilerplate",
+  "author": {
+    "name": "Paul Kretschel",
+    "email": "hi@paulkre.com",
+    "url": "https://paulkre.com"
+  },
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@types/jquery": "^3.3.31",
+    "@wpackio/scripts": "^4.3.0",
+    "fork-ts-checker-webpack-plugin": "^4.0.3",
+    "jquery": "^3.4.1",
+    "node-sass": "^4.13.1",
+    "typescript": "^3.7.5"
+  },
+  "scripts": {
+    "bootstrap": "wpackio-scripts bootstrap",
+    "build": "wpackio-scripts build",
+    "start": "wpackio-scripts start",
+    "archive": "npm run build && wpackio-scripts pack"
+  },
+  "dependencies": {
+    "@wpackio/entrypoint": "^4.3.0"
+  }
+}

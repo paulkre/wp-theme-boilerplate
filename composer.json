@@ -1,0 +1,51 @@
+{
+  "name": "paulkre/wp-theme-boilerplate",
+  "description": "A starting point for a new WordPress theme",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Paul Kretschel",
+      "email": "hi@paulkre.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "advanced-custom-fields/advanced-custom-fields-pro",
+        "version": "5.8.3",
+        "type": "wordpress-plugin",
+        "dist": {
+          "type": "zip",
+          "url": "https://connect.advancedcustomfields.com/index.php?a=download&p=pro&k={%ACF_PRO_KEY}&t={%version}"
+        },
+        "require": {
+          "composer/installers": "^1.4",
+          "ffraenz/private-composer-installer": "^2.0"
+        }
+      }
+    },
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+  ],
+  "extra": {
+    "installer-paths": {
+      "vendor/{$name}/": [
+        "type:wordpress-plugin",
+        "type:wordpress-theme"
+      ]
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "ThemeLib\\": "lib/"
+    }
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "advanced-custom-fields/advanced-custom-fields-pro": "5.8.3",
+    "wpackio/enqueue": "dev-master"
+  }
+}

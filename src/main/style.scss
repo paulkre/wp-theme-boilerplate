@@ -1,0 +1,15 @@
+.main__wrapper {
+  padding: 1rem;
+
+  & > h1,
+  & > h2 {
+    margin: 0 0 1rem 0;
+  }
+
+  p {
+    margin: 0;
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+  }
+}

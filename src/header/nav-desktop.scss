@@ -1,0 +1,83 @@
+@media (min-width: $screen-sm) {
+  .header__nav {
+    .header__nav__button {
+      display: none;
+    }
+
+    .current-menu-item > a {
+      &:link,
+      &:visited {
+        color: lighten($text-color, 33%);
+      }
+    }
+
+    & > .menu {
+      height: 100%;
+    }
+
+    & > .menu > ul,
+    & > ul {
+      opacity: 1;
+      pointer-events: auto;
+      position: initial;
+      transition: none;
+
+      height: 100%;
+
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      height: 100%;
+
+      & > li {
+        height: 100%;
+        position: relative;
+
+        & > a {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          padding: 0 1rem;
+
+          &:hover,
+          &:active {
+            background: darken($indented-bg-color, 4%);
+          }
+        }
+
+        & > ul {
+          background: $indented-bg-color;
+          position: absolute;
+          top: 100%;
+          width: 10rem;
+
+          transition: 0.2s ease all;
+          opacity: 0;
+          pointer-events: none;
+          right: 2rem;
+
+          & > li {
+            & > a {
+              color: inherit;
+              padding: 1rem;
+              &:hover,
+              &:active {
+                background: darken($indented-bg-color, 4%);
+              }
+            }
+
+            & > ul {
+              display: none;
+            }
+          }
+        }
+
+        &:hover > ul {
+          opacity: 1;
+          pointer-events: auto;
+          right: 0;
+        }
+      }
+    }
+  }
+}

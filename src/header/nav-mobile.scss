@@ -1,0 +1,64 @@
+.header__nav {
+  .header__nav__button {
+    background: transparent;
+    border: 0;
+    font-size: inherit;
+    height: 100%;
+    padding: 0 1rem;
+    cursor: pointer;
+    transition: 0.2s ease all;
+
+    &:hover {
+      color: $highlight-color;
+      background: darken($indented-bg-color, 4%);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  & > .menu > ul,
+  & > ul {
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s ease all;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: absolute;
+    left: -2rem;
+    top: 100%;
+    width: 100%;
+    background: $indented-bg-color;
+
+    & > li {
+      a {
+        padding: 1rem;
+        &:hover {
+          background: darken($indented-bg-color, 4%);
+        }
+      }
+
+      & > ul a {
+        padding-left: 2rem;
+        color: lighten($text-color, 50%);
+      }
+    }
+  }
+
+  &.open {
+    .header__nav__button {
+      color: $highlight-color;
+      background: darken($indented-bg-color, 4%);
+    }
+
+    & > .menu > ul,
+    & > ul {
+      opacity: 1;
+      pointer-events: auto;
+      left: 0;
+    }
+  }
+}

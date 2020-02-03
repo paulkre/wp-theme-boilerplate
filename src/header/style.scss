@@ -1,0 +1,41 @@
+@import "../variables.scss";
+
+.header__wrapper {
+  background: $indented-bg-color;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  position: relative;
+
+  a {
+    display: block;
+    transition: 0.2s ease all;
+    color: $text-color;
+    text-decoration: none;
+
+    &:hover,
+    &:active {
+      color: $highlight-color !important;
+    }
+  }
+
+  ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      display: block;
+    }
+  }
+}
+
+.header__logo {
+  padding: 1rem;
+  font-size: 24px;
+}
+
+@import "./nav-mobile.scss";
+@import "./nav-desktop.scss";
