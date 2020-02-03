@@ -21,6 +21,10 @@
     "start": "wpackio-scripts start",
     "archive": "npm run build && wpackio-scripts pack"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulkre/wp-theme-boilerplate.git"
+  },
   "dependencies": {
     "@wpackio/entrypoint": "^4.3.0"
   }
