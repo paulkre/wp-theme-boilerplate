@@ -4,7 +4,7 @@ namespace ThemeLib;
 
 class ACF
 {
-	function __construct()
+	static function init()
 	{
 		require_once THEME_DIR . 'vendor' . DS . 'advanced-custom-fields-pro' . DS . 'acf.php';
 

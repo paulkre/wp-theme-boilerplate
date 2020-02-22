@@ -4,8 +4,14 @@ $theme_path = get_template_directory() . DIRECTORY_SEPARATOR;
 
 require_once $theme_path . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-new \ThemeLib\Theme($theme_path, get_template_directory_uri() . '/');
+$theme = new \ThemeLib\Theme($theme_path, get_template_directory_uri() . '/');
 
+$theme->register_page(
+	new \ThemeLib\Page(
+		'home',
+		'Home'
+	)
+);
 
 add_action('admin_menu', function () {
 	// remove_menu_page('index.php'); //Dashboard
