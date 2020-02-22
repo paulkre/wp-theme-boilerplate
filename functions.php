@@ -1,7 +1,5 @@
 <?php
 
-define('WP_DEBUG', true);
-
 require_once get_template_directory() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 \ThemeLib\Theme::init();
