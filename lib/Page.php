@@ -7,7 +7,7 @@ class Page
 	public $name;
 	public $title;
 
-	public function __construct(string $name, string $title, array $fields = null)
+	function __construct(string $name, string $title, array $fields = null)
 	{
 		$this->name = $name;
 		$this->title = $title;
@@ -25,7 +25,7 @@ class Page
 			]);
 	}
 
-	public function handle_activation()
+	function handle_activation()
 	{
 		if (
 			!empty(get_posts([
@@ -34,11 +34,17 @@ class Page
 			]))
 		) return;
 
-		wp_insert_post([
+		$id = wp_insert_post([
 			'post_name' => $this->name,
 			'post_title' => $this->title,
 			'post_type' => 'page',
 			'post_status' => 'publish'
 		]);
+
+		Theme::print(
+			__('Page') . ' "' . $this->title . '" ' . __('created') . '. '
+				. '<a href="/wp-admin/post.php?post=' . $id . '&action=edit">' . __('Edit') . '</a>',
+			0
+		);
 	}
 }

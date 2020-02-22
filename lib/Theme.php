@@ -8,7 +8,7 @@ class Theme
 
 	private $pages;
 
-	public static function get_instance()
+	static function get_instance()
 	{
 		if (self::$instance == null) $instance = new Theme();
 		return $instance;
@@ -54,10 +54,12 @@ class Theme
 		foreach ($this->pages as $page) $page->handle_activation();
 	}
 
-	public static function print(string $msg)
+
+
+	static function print(string $msg, int $code = -1)
 	{
-		add_action('admin_notices', function () use ($msg) { ?>
-			<div class="notice is-dismissible">
+		add_action('admin_notices', function () use ($msg, $code) { ?>
+			<div class="notice is-dismissible<?= $code < 0 ? '' : $code > 0 ? ' notice-error' : ' notice-success' ?>">
 				<p><?= $msg ?></p>
 			</div>
 <?php });
