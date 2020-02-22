@@ -5,7 +5,15 @@ require_once get_template_directory() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTO
 \ThemeLib\Theme::get_instance()->register_page(
 	new \ThemeLib\Page(
 		'home',
-		'Home'
+		'Home',
+		[
+			[
+				'name' => 'welcome_message',
+				'key' => 'welcome_message',
+				'type' => 'text',
+				'label' => 'Welcome Message'
+			]
+		]
 	)
 );
 

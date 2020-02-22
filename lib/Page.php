@@ -7,10 +7,22 @@ class Page
 	public $name;
 	public $title;
 
-	public function __construct(string $name, string $title)
+	public function __construct(string $name, string $title, array $fields = null)
 	{
 		$this->name = $name;
 		$this->title = $title;
+
+		if (!empty($fields))
+			acf_add_local_field_group([
+				'key' => $name . '_group',
+				'title' => $title . ' ' . __('Settings'),
+				'fields' => $fields,
+				'location' => [[[
+					'param' => 'post_name',
+					'operator' => '==',
+					'value' => $name
+				]]]
+			]);
 	}
 
 	public function handle_activation()
