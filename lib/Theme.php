@@ -26,6 +26,14 @@ class Theme
 			if (isset($_GET['activated']) && is_admin())
 				$this->handle_activation();
 		});
+
+		add_filter('login_head', function () { ?>
+			<style type="text/css">
+				#login>h1 {
+					display: none;
+				}
+			</style>
+		<?php });
 	}
 
 	function register_page(Page $page)
@@ -40,12 +48,10 @@ class Theme
 
 	public static function print(string $msg)
 	{
-		add_action('admin_notices', function () use ($msg) {
-?>
+		add_action('admin_notices', function () use ($msg) { ?>
 			<div class="notice is-dismissible">
 				<p><?= $msg ?></p>
 			</div>
-<?php
-		});
+<?php });
 	}
 }
