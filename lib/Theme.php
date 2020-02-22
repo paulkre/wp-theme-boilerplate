@@ -4,35 +4,18 @@ namespace ThemeLib;
 
 class Theme
 {
-	private static $instance = null;
-
-	private $pages;
-
-	static function get_instance()
-	{
-		if (self::$instance == null) $instance = new Theme();
-		return $instance;
-	}
-
-	private function __construct()
+	static function init()
 	{
 		!defined('DS') ? define('DS', DIRECTORY_SEPARATOR) : null;
 		!defined('THEME_DIR') ? define('THEME_DIR', get_template_directory() . DS) : null;
 		!defined('THEME_URL') ? define('THEME_URL', get_template_directory_uri() . '/') : null;
 		!defined('THEME_VERSION') ? define('THEME_VERSION', '0.1.0') : null;
 
-		ACF::init();
-		WPackio::enqueue_assets();
-
-		$this->pages = [];
+		self::init_acf();
+		self::init_wpackio();
 
 		add_action('init', function () {
-			register_nav_menus([
-				'primary' => 'Main'
-			]);
-
-			if (isset($_GET['activated']) && is_admin())
-				$this->handle_activation();
+			register_nav_menus(['primary' => 'Main']);
 		});
 
 		add_filter('login_head', function () { ?>
@@ -44,22 +27,41 @@ class Theme
 		<?php });
 	}
 
-	function register_page(Page $page)
+	private static function init_acf()
 	{
-		$this->pages[$page->name] = $page;
+		require_once THEME_DIR . 'vendor' . DS . 'advanced-custom-fields-pro' . DS . 'acf.php';
+
+		add_filter('acf/settings/show_admin', '__return_false');
+		add_filter('acf/settings/url', function () {
+			return THEME_URL . 'vendor/advanced-custom-fields-pro/';
+		});
+
+		add_filter('acf/location/rule_match/post_name', function ($match, $rule) {
+			$post = get_post();
+			if (empty($post)) return $match;
+			return $post->post_name == $rule['value'];
+		}, 10, 2);
 	}
 
-	function handle_activation()
+	private static function init_wpackio()
 	{
-		foreach ($this->pages as $page) $page->handle_activation();
+		$enqueue = new \WPackio\Enqueue('theme', 'dist', THEME_VERSION, 'theme');
+		add_action('wp_enqueue_scripts', function () use ($enqueue) {
+			$enqueue->enqueue('app', 'main', []);
+		});
 	}
 
-
-
-	static function print(string $msg, int $code = -1)
+	static function sanitize_field_props(array &$fields)
 	{
-		add_action('admin_notices', function () use ($msg, $code) { ?>
-			<div class="notice is-dismissible<?= $code < 0 ? '' : $code > 0 ? ' notice-error' : ' notice-success' ?>">
+		foreach ($fields as &$field) $field['key'] = $field['name'];
+	}
+
+	static function print($msg, int $code = -1)
+	{
+		if (is_array($msg)) $msg = var_export($msg, true);
+		$style = $code < 0 ? '' : $code == 0 ? 'notice-success' : 'notice-error';
+		add_action('admin_notices', function () use ($msg, $style) { ?>
+			<div class="notice is-dismissible <?= $style ?>">
 				<p><?= $msg ?></p>
 			</div>
 <?php });

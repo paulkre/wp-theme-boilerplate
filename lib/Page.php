@@ -4,17 +4,13 @@ namespace ThemeLib;
 
 class Page
 {
-	public $name;
-	public $title;
-
-	function __construct(string $name, string $title, array $fields = null)
+	static function register(string $name, string $title, array $fields)
 	{
-		$this->name = $name;
-		$this->title = $title;
+		Theme::sanitize_field_props($fields);
 
 		if (!empty($fields))
 			acf_add_local_field_group([
-				'key' => $name . '_group',
+				'key' => $name,
 				'title' => $title . ' ' . __('Settings'),
 				'fields' => $fields,
 				'location' => [[[
@@ -23,26 +19,31 @@ class Page
 					'value' => $name
 				]]]
 			]);
+
+		add_action('init', function () use ($name, $title) {
+			if (isset($_GET['activated']) && is_admin())
+				self::handle_activation($name, $title);
+		});
 	}
 
-	function handle_activation()
+	private static function handle_activation(string $name, string $title)
 	{
 		if (
 			!empty(get_posts([
-				'name' => $this->name,
+				'name' => $name,
 				'post_type' => 'page'
 			]))
 		) return;
 
 		$id = wp_insert_post([
-			'post_name' => $this->name,
-			'post_title' => $this->title,
+			'post_name' => $name,
+			'post_title' => $title,
 			'post_type' => 'page',
 			'post_status' => 'publish'
 		]);
 
 		Theme::print(
-			__('Page') . ' "' . $this->title . '" ' . __('created') . '. '
+			__('Page') . ' "' . $title . '" ' . __('created') . '. '
 				. '<a href="/wp-admin/post.php?post=' . $id . '&action=edit">' . __('Edit') . '</a>',
 			0
 		);

@@ -1,20 +1,42 @@
 <?php
 
+define('WP_DEBUG', true);
+
 require_once get_template_directory() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-\ThemeLib\Theme::get_instance()->register_page(
-	new \ThemeLib\Page(
-		'home',
-		'Home',
+\ThemeLib\Theme::init();
+
+\ThemeLib\Page::register(
+	'home',
+	'Home',
+	[
 		[
-			[
-				'name' => 'welcome_message',
-				'key' => 'welcome_message',
-				'type' => 'text',
-				'label' => 'Welcome Message'
-			]
+			'name' => 'welcome-message',
+			'key' => 'home__welcome-message',
+			'type' => 'text',
+			'label' => 'Welcome Message'
 		]
-	)
+	]
+);
+
+\ThemeLib\OptionsPage::register(
+	'settings',
+	'Theme Settings',
+	[
+		[
+			'name' => 'settings__subtitle',
+			'label' => __('Subtitle'),
+			'type' => 'text'
+		], [
+			'name' => 'settings__address',
+			'label' => __('Address'),
+			'type' => 'wysiwyg',
+			'media_upload' => 0,
+			'toolbar' => 'basic',
+			'tabs' => 'visual',
+			'default_value' => '<strong>Paul Kretschel</strong><br/>Kalkumer Str. 119<br/>40468 Düsseldorf'
+		]
+	]
 );
 
 add_action('admin_menu', function () {
