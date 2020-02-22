@@ -1,12 +1,8 @@
 <?php
 
-$theme_path = get_template_directory() . DIRECTORY_SEPARATOR;
+require_once get_template_directory() . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-require_once $theme_path . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-
-$theme = new \ThemeLib\Theme($theme_path, get_template_directory_uri() . '/');
-
-$theme->register_page(
+\ThemeLib\Theme::get_instance()->register_page(
 	new \ThemeLib\Page(
 		'home',
 		'Home'

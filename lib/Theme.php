@@ -4,13 +4,21 @@ namespace ThemeLib;
 
 class Theme
 {
+	private static $instance = null;
+
 	private $pages;
 
-	public function __construct(string $dir, string $url)
+	public static function get_instance()
+	{
+		if (self::$instance == null) $instance = new Theme();
+		return $instance;
+	}
+
+	private function __construct()
 	{
 		!defined('DS') ? define('DS', DIRECTORY_SEPARATOR) : null;
-		!defined('THEME_DIR') ? define('THEME_DIR', $dir) : null;
-		!defined('THEME_URL') ? define('THEME_URL', $url) : null;
+		!defined('THEME_DIR') ? define('THEME_DIR', get_template_directory() . DS) : null;
+		!defined('THEME_URL') ? define('THEME_URL', get_template_directory_uri() . '/') : null;
 		!defined('THEME_VERSION') ? define('THEME_VERSION', '0.1.0') : null;
 
 		ACF::init();
